@@ -3,6 +3,7 @@ import org.googlenotauthorized.MainPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.time.Duration;
 import java.util.logging.Logger;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -22,20 +23,21 @@ public class MainPageTest {
     public void setUpEach(){
         System.setProperty("selenide.browser", "Chrome");
         open("https://www.google.com/");
+        getWebDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         getWebDriver().manage().window().maximize();
 
         mainPage = new MainPage();
     }
 
     @Test
-    public void logoIsShown(){
+    public void checkLogoIsShown(){
         boolean expectedResult = true;
         boolean actualResult = mainPage.logoImageState();
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void gmailIsOpened(){
+    public void CheckUrlForGmailAfterClickingGmailButton(){
         String expectedResult = "https://www.google.com/intl/uk/gmail/about/";
         mainPage.gmailButtonClick();
         mainPage.waitUntilElementDisappear(mainPage.getGmailButton(), 5);
@@ -44,7 +46,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void imagesIsOpened(){
+    public void checkUrlForImagesSearchAfterClickingImagesButton(){
         String expectedResult = "https://www.google.com.ua/imghp?hl=uk&ogbl";
         mainPage.imagesButtonClick();
         mainPage.waitUntilElementDisappear(mainPage.getImagesButton(), 5);
@@ -53,14 +55,14 @@ public class MainPageTest {
     }
 
     @Test
-    public void menuIsSelected(){
+    public void checkMenuWidgetIsExpandedAfterSelectingIt(){
         boolean actualResult = mainPage.getMenuStateAfterClick();
         boolean expectedResult = true;
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void loginPageIsOpened(){
+    public void checkUrlForLoginPageIsOpenedAfterSelectingLogin(){
         mainPage.loginButtonClick();
         mainPage.waitUntilElementDisappear(mainPage.getLoginButton(), 5);
         String actualResult = url();
@@ -69,7 +71,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void searchForSmth(){
+    public void checkUrlForSearchAfterEnteringTextAndPressingEnter(){
         mainPage.searchWithEnter("test");
         mainPage.waitUntilElementDisappear(mainPage.getLogoImage(), 5);
         String actualResult = url();
@@ -78,7 +80,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void searchButtonWithoutText(){
+    public void checkUrlIsNotChangedAfterClickingSearchButtonButtonWithoutText(){
         mainPage.searchButtonClick();
         String actualResult = url();
         String expectedResult = "https://www.google.com/";
@@ -86,7 +88,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void searchWithButton(){
+    public void checkUrlIsChangedAfterClickingSearchButtonWithEnteredText(){
         mainPage.searchWithButton("test2");
         String actualResult = url();
         String expectedResult = "https://www.google.com/";
@@ -94,21 +96,21 @@ public class MainPageTest {
     }
 
     @Test
-    public void clearSearchFieldWithText(){
+    public void checkSearchQueryIsClearedAfterSelectingClearButtonWithEnteredText(){
         String actualResult = mainPage.searchFieldEnterText("test3").clearButtonClick();
         String expectedResult = null;
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void clearSearchFieldWithoutText(){
-        String actualResult = mainPage.clearButtonClick();
-        String expectedResult = "";
-        Assert.assertNotEquals(actualResult,expectedResult);
+    public void checkClearButtonIsNotShownIfNoTextEnteredToSearchField(){
+        Boolean actualResult = mainPage.getClearButtonState();
+        Boolean expectedResult = false;
+        Assert.assertEquals(actualResult,expectedResult);
     }
 
     @Test(invocationCount = 10)
-    public void searchWithImage(){
+    public void checkUrlIsChangedAfterSearchingWithImage(){
         mainPage.searchWithImage("C:\\Users\\maksy\\Kate\\cat.jpg");
         mainPage.waitUntilElementDisappear(mainPage.getImagesButton(), 5);
         String actualResult = url();
@@ -117,7 +119,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void luckySearch(){
+    public void checkUrlIsChangedAfterSelectingLuckySearchButton(){
         mainPage.luckyButtonClick();
         boolean actualResult = url().contains("https://www.google.com/");
         boolean expectedResult = true;

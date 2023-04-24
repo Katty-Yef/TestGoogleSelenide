@@ -81,11 +81,22 @@ public class MainPage {
     }
 
     public String clearButtonClick(){
-        if (!(searchField.text().equals(""))){
+//        if (!(searchField.text().equals(""))){
+//            clearButton.click();
+//            return searchField.text();
+//        }
+//        else return null;
+        if (getClearButtonState() == true) {
             clearButton.click();
             return searchField.text();
         }
         else return null;
+    }
+
+    public boolean getClearButtonState(){
+        if (clearButton.isDisplayed())
+            return true;
+        else return false;
     }
 
     public MainPage searchByImageClick(){
