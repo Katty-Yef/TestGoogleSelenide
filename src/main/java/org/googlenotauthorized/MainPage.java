@@ -14,12 +14,12 @@ import static com.codeborne.selenide.WebDriverRunner.url;
 public class MainPage {
 
     private SelenideElement logoImage = $x("//img[@class='lnXdpd']");
-    private SelenideElement gmailButton = $x("//div[@class='gb_q gb_r'][1]/a");
-    private SelenideElement imagesButton = $x("//div[@class='gb_q gb_r'][2]/a");
+    private SelenideElement gmailButton = $x("//div[@class='gb_u gb_v'][1]/a");
+    private SelenideElement imagesButton = $x("//div[@class='gb_u gb_v'][2]/a");
     private SelenideElement menuButton = $x("//div[@id='gbwa']");
     private SelenideElement iframe = $x("//iframe[@name='app']");
-    private SelenideElement loginButton = $x("//div[@class='gb_We']/a");
-    private SelenideElement searchField = $x("//input[@class='gLFyf']");
+    private SelenideElement loginButton = $x("//div[@class='gb_Ae']/a");
+    private SelenideElement searchField = $x("//textarea[@id='APjFqb']");
     private SelenideElement searchButton = $x("//div[@class='FPdoLc lJ9FBc']//input[@class='gNO89b']");
     private SelenideElement clearButton = $x("//div[@class='vOY7J M2vV3']");
     private SelenideElement searchByImageButton = $x("//div[@class='nDcEnd']");
@@ -27,7 +27,7 @@ public class MainPage {
     private SelenideElement luckyButton = $x("//div[@class='FPdoLc lJ9FBc']//input[@class='RNmpXc']");
     private SelenideElement emptySpace = $x("//div[@id='gb']");
 
-    public boolean logoImageState(){
+    public boolean getLogoImageState(){
         boolean logoIsDisplayed = logoImage.isDisplayed();
         return logoIsDisplayed;
     }
@@ -42,8 +42,11 @@ public class MainPage {
         imagesButton.should(Condition.disappear);
     }
 
-    public boolean getMenuStateAfterClick(){
+    public void menuButtonClick(){
         menuButton.click();
+    }
+
+    public boolean getMenuState(){
         boolean iframeIsOpened = iframe.isEnabled();
         return iframeIsOpened;
     }
@@ -57,13 +60,13 @@ public class MainPage {
         element.should(Condition.disappear, Duration.ofSeconds(duration));
     }
 
-    public MainPage searchFieldEnterText(String text){
+    public MainPage enterTextToSearchField(String text){
         searchField.val(text);
         return this;
     }
 
-    public MainPage searchWithEnter(String text){
-        searchFieldEnterText(text);
+    public MainPage pressEnterForSearchFiled(String text){
+        enterTextToSearchField(text);
         searchField.sendKeys(Keys.ENTER);
         return new MainPage();
     }
@@ -73,19 +76,13 @@ public class MainPage {
         return new MainPage();
     }
 
-    public MainPage searchWithButton(String text){
-        searchFieldEnterText(text);
-        emptySpace.click();
+    public MainPage clickSearchButtonForSearchField(String text){
+        enterTextToSearchField(text);
         searchButtonClick();
         return new MainPage();
     }
 
     public String clearButtonClick(){
-//        if (!(searchField.text().equals(""))){
-//            clearButton.click();
-//            return searchField.text();
-//        }
-//        else return null;
         if (getClearButtonState() == true) {
             clearButton.click();
             return searchField.text();
@@ -94,18 +91,17 @@ public class MainPage {
     }
 
     public boolean getClearButtonState(){
-        if (clearButton.isDisplayed())
-            return true;
-        else return false;
+        Boolean clearButtonState = clearButton.isDisplayed();
+        return clearButtonState;
     }
 
-    public MainPage searchByImageClick(){
+    public MainPage searchByImageButtonClick(){
         searchByImageButton.click();
         return this;
     }
 
-    public void searchWithImage(String filePath){
-        searchByImageClick();
+    public void uploadFileForSearchWithImage(String filePath){
+        searchByImageButtonClick();
         File file = new File(filePath);
         uploadButton.uploadFile(file);
     }
