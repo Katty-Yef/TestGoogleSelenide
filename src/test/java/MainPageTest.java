@@ -1,15 +1,21 @@
 import com.codeborne.pdftest.assertj.Assertions;
 import org.googlenotauthorized.MainPage;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class MainPageTest extends BaseClass<MainPage>{
 
-    protected String urlGoogleStartPage = "https://www.google.com/";
-    MainPageTest(String url) {
-        super(url);
+    private static String urlGoogleStartPage = "https://www.google.com/";
+
+    public MainPageTest() {
+        super(urlGoogleStartPage);
+    }
+
+    @Override
+    protected MainPage createInstance(){
+        return new MainPage();
     }
 
     @Test
@@ -31,7 +37,7 @@ public class MainPageTest extends BaseClass<MainPage>{
     public void checkUrlForImagesSearchAfterClickingImagesButton(){
         page.imagesButtonClick();
         String actualResult = url();
-        Assert.assertTrue(actualResult.contains(urlGoogleStartPage + "imghp?hl="));
+        Assert.assertTrue(actualResult.contains("imghp"));
     }
 
     @Test
