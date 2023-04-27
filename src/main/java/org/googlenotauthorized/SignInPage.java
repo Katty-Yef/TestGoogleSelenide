@@ -20,44 +20,44 @@ public class SignInPage {
     private SelenideElement moreButton = $x("//span//a");
 
 
-    public String getHeading(){
+    public String getHeading() {
         String header = heading.getText();
         return header;
     }
 
-    public void typeEmail(String email){
+    public void typeEmail(String email) {
         emailField.sendKeys(email);
     }
 
-    public void enterEmail(String email){
+    public void enterEmail(String email) {
         typeEmail(email);
         nextButtonForEmail.click();
     }
 
-    public String getErrorMessageForInvalidEmail(String email){
+    public String getErrorMessageForInvalidEmail(String email) {
         enterEmail(email);
         return errorMessageForInvalidEmail.getText();
     }
 
-    public String getErrorMessageForEmptyEmail(String email){
+    public String getErrorMessageForEmptyEmail(String email) {
         enterEmail(email);
         return errorMessageForEmptyEmail.getText();
     }
 
-    public void forgotEmailButtonClick(){
+    public void forgotEmailButtonClick() {
         forgotEmailButton.click();
     }
 
-    public void createAccountButtonClick(){
+    public void createAccountButtonClick() {
         createAccButton.click();
         emailUsageDropdown.click();
     }
 
-    public void moreButtonClick(){
+    public void moreButtonClick() {
         moreButton.click();
     }
 
-    public void moreButtonClickSecondMethod(){
+    public void moreButtonClickSecondMethod() {
         moreButton.sendKeys(Keys.CONTROL, Keys.ENTER);
     }
 

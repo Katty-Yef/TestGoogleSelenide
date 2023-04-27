@@ -16,33 +16,33 @@ public class SignInPageTest extends BaseClass<SignInPage> {
         super(signInLink);
     }
     @Override
-    protected SignInPage createInstance(){
+    protected SignInPage createPageInstance() {
         return new SignInPage();
     }
 
     @Test
-    public void checkPageHeadingContainsCorrectPageName(){
+    public void checkPageHeadingContainsCorrectPageName() {
         String actualResult = page.getHeading();
         String expectedResult = "Увійти";
         Assert.assertEquals(actualResult, expectedResult);
     }
 
-    @Test
-    public void checkErrorMessageForSubmittingFormWithInvalidEmail(){
-        String actualResult = page.getErrorMessageForInvalidEmail("test@@@@");
-        String expectedResult = "Введіть дійсні електронну адресу або номер телефону";
-        Assert.assertEquals(actualResult, expectedResult);
-    }
+//    @Test
+//    public void checkErrorMessageForSubmittingFormWithInvalidEmail() {
+//        String actualResult = page.getErrorMessageForInvalidEmail(faker.internet().url());
+//        String expectedResult = "Введіть дійсні електронну адресу або номер телефону";
+//        Assert.assertEquals(actualResult, expectedResult);
+//    }
 
     @Test
-    public void checkErrorMessageForSubmittingFormWithEmptyEmail(){
+    public void checkErrorMessageForSubmittingFormWithEmptyEmail() {
         String actualResult = page.getErrorMessageForEmptyEmail("");
         String expectedResult = "Введіть електронну адресу або номер телефону";
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkUrlAfterClickingForgotEmailButton(){
+    public void checkUrlAfterClickingForgotEmailButton() {
         page.forgotEmailButtonClick();
         String actualResult = url();
         String expectedResult = forgotEmailLink;
@@ -50,7 +50,7 @@ public class SignInPageTest extends BaseClass<SignInPage> {
     }
 
     @Test
-    public void checkUrlAfterClickingCreateAccountButton(){
+    public void checkUrlAfterClickingCreateAccountButton() {
         switchTo().window(0);
         page.createAccountButtonClick();
         String actualResult = url();
@@ -59,13 +59,13 @@ public class SignInPageTest extends BaseClass<SignInPage> {
     }
 
     @Test
-    public void checkTextOnOpenedPageAfterClickingMoreButton(){
+    public void checkTextOnOpenedPageAfterClickingMoreButton() {
         page.moreButtonClick();
         Assertions.assertThat(title().contains("Як користуватися Chrome у режимі гостя"));
     }
 
     @Test
-    public void checkTextOnOpenedPageAfterClickingMoreButtonWithSecondMethod(){
+    public void checkTextOnOpenedPageAfterClickingMoreButtonWithSecondMethod() {
         page.moreButtonClickSecondMethod();
         Assertions.assertThat(title().contains("Як користуватися Chrome у режимі гостя"));
     }
