@@ -29,7 +29,7 @@ public class SignInPageTest extends BaseClass<SignInPage> {
 
     @Test
     public void checkErrorMessageForSubmittingFormWithInvalidEmail() {
-        String actualResult = page.getErrorMessageForInvalidEmail(faker.internet().emailAddress().replace(".", ""));
+        String actualResult = page.getErrorMessageForInvalidEmail(faker.internet().emailAddress().replace(".", "")); //trying email address without dot
         String expectedResult = "Введіть дійсні електронну адресу або номер телефону";
         Assert.assertEquals(actualResult, expectedResult);
     }
