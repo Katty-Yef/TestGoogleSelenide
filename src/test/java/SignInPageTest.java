@@ -27,12 +27,12 @@ public class SignInPageTest extends BaseClass<SignInPage> {
         Assert.assertEquals(actualResult, expectedResult);
     }
 
-//    @Test
-//    public void checkErrorMessageForSubmittingFormWithInvalidEmail() {
-//        String actualResult = page.getErrorMessageForInvalidEmail(faker.internet().url());
-//        String expectedResult = "Введіть дійсні електронну адресу або номер телефону";
-//        Assert.assertEquals(actualResult, expectedResult);
-//    }
+    @Test
+    public void checkErrorMessageForSubmittingFormWithInvalidEmail() {
+        String actualResult = page.getErrorMessageForInvalidEmail(faker.internet().emailAddress().replace(".", ""));
+        String expectedResult = "Введіть дійсні електронну адресу або номер телефону";
+        Assert.assertEquals(actualResult, expectedResult);
+    }
 
     @Test
     public void checkErrorMessageForSubmittingFormWithEmptyEmail() {
