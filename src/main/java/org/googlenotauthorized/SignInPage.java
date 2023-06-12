@@ -13,52 +13,53 @@ public class SignInPage {
     private SelenideElement createAccButton = $x("//div[@class='ZOeJnf']//button//span");
     private SelenideElement emailUsageDropdown = $x("//div[@class='dqyqtf']//ul/li[1]");
     private SelenideElement nextButtonForEmail = $x("//div[@id='identifierNext']//button");
-    private SelenideElement errorMessageForInvalidEmail = $x("//div[@class='LXRPh']//div[@class='o6cuMc']");
+    private SelenideElement errorMessageForInvalidEmail = $x("//div[@class='o6cuMc Jj6Lae']");
     private SelenideElement heading = $x("//h1[@id='headingText']");
     private SelenideElement forgotEmailButton = $x("//div[@class='PrDSKc']/button");
-    private SelenideElement errorMessageForEmptyEmail = $x("//div[@class='o6cuMc']");
+    private SelenideElement errorMessageForEmptyEmail = $x("//div[@class='o6cuMc Jj6Lae']");
     private SelenideElement moreButton = $x("//span//a");
 
 
-    public String getHeading(){
+    public String getHeading() {
         String header = heading.getText();
         return header;
     }
 
-    public void typeEmail(String email){
+    public void typeEmail(String email) {
         emailField.sendKeys(email);
     }
 
-    public void enterEmail(String email){
+    public void enterEmail(String email) {
         typeEmail(email);
         nextButtonForEmail.click();
     }
 
-    public String getErrorInvalidForEmail(String email){
+    public String getErrorMessageForInvalidEmail(String email) {
         enterEmail(email);
         return errorMessageForInvalidEmail.getText();
     }
 
-    public String getErrorEmptyForEmail(String email){
+    public String getErrorMessageForEmptyEmail(String email) {
         enterEmail(email);
         return errorMessageForEmptyEmail.getText();
     }
 
-    public void forgotEmailButtonClick(){
+    public void forgotEmailButtonClick() {
         forgotEmailButton.click();
     }
 
-    public void createAccButtonClick(){
+    public void createAccountButtonClick() {
         createAccButton.click();
         emailUsageDropdown.click();
     }
 
-    public void moreButtonClick(){
+    public void moreButtonClick() {
         moreButton.click();
     }
 
-    public void moreButtonClickSecondMethod(){
+    public void moreButtonClickSecondMethod() {
         moreButton.sendKeys(Keys.CONTROL, Keys.ENTER);
     }
+
 
 }

@@ -3,3 +3,4 @@
 .idea
 target
 build
+/src/main/java/org/googlenotauthorized/Main.java

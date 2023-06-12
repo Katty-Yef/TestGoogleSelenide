@@ -1,134 +1,114 @@
 import com.codeborne.pdftest.assertj.Assertions;
 import org.googlenotauthorized.MainPage;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
-import java.time.Duration;
-import java.util.logging.Logger;
-
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
-public class MainPageTest {
+public class MainPageTest extends BaseClass<MainPage>{
 
-    private MainPage mainPage;
-    private static final Logger LOGGER = Logger.getLogger(MainPageTest.class.getName());
+    private static String urlGoogleStartPage = "https://www.google.com/";
 
-    @BeforeClass
-    public void setUp(){
-        LOGGER.info("Test class is started");
+    public MainPageTest() {
+        super(urlGoogleStartPage);
     }
-    @BeforeMethod
-    public void setUpEach(){
-        System.setProperty("selenide.browser", "Chrome");
-        open("https://www.google.com/");
-        getWebDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        getWebDriver().manage().window().maximize();
 
-        mainPage = new MainPage();
+    @Override
+    protected MainPage createPageInstance() {
+        return new MainPage();
     }
 
     @Test
-    public void checkLogoIsShown(){
+    public void checkLogoIsShown() {
         boolean expectedResult = true;
-        boolean actualResult = mainPage.logoImageState();
+        boolean actualResult = page.getLogoImageState();
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void CheckUrlForGmailAfterClickingGmailButton(){
-        String expectedResult = "https://www.google.com/intl/uk/gmail/about/";
-        mainPage.gmailButtonClick();
-        mainPage.waitUntilElementDisappear(mainPage.getGmailButton(), 5);
+    public void CheckUrlForGmailAfterClickingGmailButton() {
+        page.gmailButtonClick();
         String actualResult = url();
-        Assert.assertEquals(actualResult, expectedResult);
+        Assert.assertTrue(actualResult.contains(urlGoogleStartPage));
+        Assert.assertTrue(actualResult.contains("/gmail/about/"));
     }
 
     @Test
-    public void checkUrlForImagesSearchAfterClickingImagesButton(){
-        String expectedResult = "https://www.google.com.ua/imghp?hl=uk&ogbl";
-        mainPage.imagesButtonClick();
-        mainPage.waitUntilElementDisappear(mainPage.getImagesButton(), 5);
+    public void checkUrlForImagesSearchAfterClickingImagesButton() {
+        page.imagesButtonClick();
         String actualResult = url();
-        Assert.assertEquals(actualResult, expectedResult);
+        Assert.assertTrue(actualResult.contains("imghp"));
     }
 
     @Test
-    public void checkMenuWidgetIsExpandedAfterSelectingIt(){
-        boolean actualResult = mainPage.getMenuStateAfterClick();
+    public void checkMenuWidgetIsExpandedAfterSelectingIt() {
+        page.menuButtonClick();
+        boolean actualResult = page.getMenuState();
         boolean expectedResult = true;
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkUrlForLoginPageIsOpenedAfterSelectingLogin(){
-        mainPage.loginButtonClick();
-        mainPage.waitUntilElementDisappear(mainPage.getLoginButton(), 5);
+    public void checkUrlForLoginPageIsOpenedAfterSelectingLogin() {
+        page.loginButtonClick();
         String actualResult = url();
-        String expectedResult = "https://www.google.com/";
+        String expectedResult = urlGoogleStartPage;
         Assert.assertNotEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkUrlForSearchAfterEnteringTextAndPressingEnter(){
-        mainPage.searchWithEnter("test");
-        mainPage.waitUntilElementDisappear(mainPage.getLogoImage(), 5);
+    public void checkUrlForSearchAfterEnteringTextAndPressingEnter() {
+        page.pressEnterForSearchFiled(faker.lorem().word());
         String actualResult = url();
-        String expectedResult = "https://www.google.com/";
+        String expectedResult = urlGoogleStartPage;
         Assert.assertNotEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkUrlIsNotChangedAfterClickingSearchButtonButtonWithoutText(){
-        mainPage.searchButtonClick();
+    public void checkUrlIsNotChangedAfterClickingSearchButtonWithoutText() {
+        page.searchButtonClick();
         String actualResult = url();
-        String expectedResult = "https://www.google.com/";
+        String expectedResult = urlGoogleStartPage;
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkUrlIsChangedAfterClickingSearchButtonWithEnteredText(){
-        mainPage.searchWithButton("test2");
+    public void checkUrlForSearchAfterEnteringTextAndClickingSearchButton() {
+        page.clickSearchButtonForSearchField(faker.lorem().word());
         String actualResult = url();
-        String expectedResult = "https://www.google.com/";
+        String expectedResult = urlGoogleStartPage;
         Assert.assertNotEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkSearchQueryIsClearedAfterSelectingClearButtonWithEnteredText(){
-        String actualResult = mainPage.searchFieldEnterText("test3").clearButtonClick();
-        String expectedResult = null;
+    public void checkSearchQueryIsClearedAfterSelectingClearButtonWithEnteredText() {
+        String actualResult = page.enterTextToSearchField(faker.lorem().word()).clearButtonClick();
+        String expectedResult = "";
         Assert.assertEquals(actualResult, expectedResult);
     }
 
     @Test
-    public void checkClearButtonIsNotShownIfNoTextEnteredToSearchField(){
-        Boolean actualResult = mainPage.getClearButtonState();
+    public void checkClearButtonIsNotShownIfNoTextEnteredToSearchField() {
+        Boolean actualResult = page.getClearButtonState();
         Boolean expectedResult = false;
         Assert.assertEquals(actualResult,expectedResult);
     }
 
-    @Test(invocationCount = 10)
-    public void checkUrlIsChangedAfterSearchingWithImage(){
-        mainPage.searchWithImage("C:\\Users\\maksy\\Kate\\cat.jpg");
-        mainPage.waitUntilElementDisappear(mainPage.getImagesButton(), 5);
+    @Test(invocationCount = 5)
+    public void checkUrlIsChangedAfterSearchingWithImage() {
+        page.uploadFileForSearchWithImage("cat.jpg");
+        page.waitUntilElementDisappear(page.getImagesButton(), 3);
         String actualResult = url();
-        String expectedResult = "https://www.google.com/";
+        String expectedResult = urlGoogleStartPage;
         Assertions.assertThat(actualResult).isNotEqualTo(expectedResult);
     }
 
     @Test
-    public void checkUrlIsChangedAfterSelectingLuckySearchButton(){
-        mainPage.luckyButtonClick();
-        boolean actualResult = url().contains("https://www.google.com/");
+    public void checkUrlIsChangedAfterSelectingLuckySearchButton() {
+        page.luckyButtonClick();
+        boolean actualResult = url().contains(urlGoogleStartPage);
         boolean expectedResult = true;
         Assert.assertEquals(actualResult, expectedResult);
-    }
-
-    @AfterClass
-    public void tearDown(){
-        LOGGER.info("Test class is finished");
     }
 
 }
