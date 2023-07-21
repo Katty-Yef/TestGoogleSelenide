@@ -14,8 +14,8 @@ import static com.codeborne.selenide.WebDriverRunner.url;
 public class MainPage {
 
     private SelenideElement logoImage = $x("//img[@class='lnXdpd']");
-    private SelenideElement gmailButton = $x("//div[@class='gb_u gb_v'][1]/a");
-    private SelenideElement imagesButton = $x("//div[@class='gb_u gb_v'][2]/a");
+    private SelenideElement gmailButton = $x("//div[1]/a[@class='gb_v']");
+    private SelenideElement imagesButton = $x("//div[2]/a[@class='gb_v']");
     private SelenideElement menuButton = $x("//div[@id='gbwa']");
     private SelenideElement iframe = $x("//iframe[@name='app']");
     private SelenideElement loginButton = $x("//body/div/div/div/div/div/div/a");
@@ -62,6 +62,7 @@ public class MainPage {
 
     public MainPage enterTextToSearchField(String text) {
         searchField.val(text);
+        searchField.sendKeys(Keys.TAB);
         return this;
     }
 

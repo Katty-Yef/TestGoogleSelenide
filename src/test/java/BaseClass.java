@@ -1,4 +1,5 @@
 import com.github.javafaker.Faker;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -6,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import java.time.Duration;
 import java.util.logging.Logger;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public abstract class BaseClass<T>{
@@ -33,9 +34,9 @@ public abstract class BaseClass<T>{
         open(urlToOpen);
         getWebDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         getWebDriver().manage().window().maximize();
-
+        clearBrowserCookies();
+        clearBrowserLocalStorage();
         page = createPageInstance();
-
     }
 
     @AfterClass

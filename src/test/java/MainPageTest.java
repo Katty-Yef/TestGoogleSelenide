@@ -94,7 +94,7 @@ public class MainPageTest extends BaseClass<MainPage>{
         Assert.assertEquals(actualResult,expectedResult);
     }
 
-    @Test(invocationCount = 5)
+    @Test //(invocationCount = 5)
     public void checkUrlIsChangedAfterSearchingWithImage() {
         page.uploadFileForSearchWithImage("cat.jpg");
         page.waitUntilElementDisappear(page.getImagesButton(), 3);

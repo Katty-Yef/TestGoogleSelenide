@@ -19,7 +19,6 @@ public class SignInPage {
     private SelenideElement errorMessageForEmptyEmail = $x("//div[@class='o6cuMc Jj6Lae']");
     private SelenideElement moreButton = $x("//span//a");
 
-
     public String getHeading() {
         String header = heading.getText();
         return header;
@@ -60,6 +59,4 @@ public class SignInPage {
     public void moreButtonClickSecondMethod() {
         moreButton.sendKeys(Keys.CONTROL, Keys.ENTER);
     }
-
-
 }
