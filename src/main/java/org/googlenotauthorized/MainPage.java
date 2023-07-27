@@ -12,10 +12,9 @@ import static com.codeborne.selenide.WebDriverRunner.url;
 
 @Getter
 public class MainPage {
-
     private SelenideElement logoImage = $x("//img[@class='lnXdpd']");
-    private SelenideElement gmailButton = $x("//div[1]/a[@class='gb_v']");
-    private SelenideElement imagesButton = $x("//div[2]/a[@class='gb_v']");
+    private SelenideElement gmailButton = $x("//div[1]/a[@class='gb_y']");
+    private SelenideElement imagesButton = $x("//div[2]/a[@class='gb_y']");
     private SelenideElement menuButton = $x("//div[@id='gbwa']");
     private SelenideElement iframe = $x("//iframe[@name='app']");
     private SelenideElement loginButton = $x("//body/div/div/div/div/div/div/a");
@@ -111,5 +110,4 @@ public class MainPage {
         luckyButton.click();
         return url();
     }
-
 }

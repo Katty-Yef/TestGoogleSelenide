@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Selenide.$x;
 
 @Getter
 public class SignInPage {
-
     private SelenideElement emailField = $x("//input[@id='identifierId']");
     private SelenideElement createAccButton = $x("//div[@class='ZOeJnf']//button//span");
     private SelenideElement emailUsageDropdown = $x("//div[@class='dqyqtf']//ul/li[1]");

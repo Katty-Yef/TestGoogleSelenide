@@ -6,13 +6,10 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
 public class SignInPageTest extends BaseClass<SignInPage> {
-
-    private String createAccountLink = "https://accounts.google.com/v3/signin/identifier?dsh=S1477041361%3A1675765131384446&continue=https%3A%2F%2Fwww.google.com%2F&ec=GAZAmgQ&hl=uk&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AWnogHd7r039xISXLNyW9iuaLW1qrLpevDeEGqLaFBFEWmwPTNUicNIdMPzSuXBPIxezN65F4E8wUg";
-    private String forgotEmailLink = "https://accounts.google.com/signin/v2/usernamerecovery";
-    private static String signInLink = "https://accounts.google.com/v3/signin/identifier?dsh=S1477041361%3A1675765131384446&continue=https%3A%2F%2Fwww.google.com%2F&ec=GAZAmgQ&hl=en&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AWnogHd7r039xISXLNyW9iuaLW1qrLpevDeEGqLaFBFEWmwPTNUicNIdMPzSuXBPIxezN65F4E8wUg";
+    private static String urlToOpen = "signInLink";
 
     public SignInPageTest(){
-        super(signInLink);
+        super(urlToOpen);
     }
 
     @Override
@@ -45,7 +42,7 @@ public class SignInPageTest extends BaseClass<SignInPage> {
     public void checkUrlAfterClickingForgotEmailButton() {
         page.forgotEmailButtonClick();
         String actualResult = url();
-        String expectedResult = forgotEmailLink;
+        String expectedResult = properties.getProperty("forgotEmailLink");
         Assert.assertTrue(actualResult.contains(expectedResult));
     }
 
@@ -53,7 +50,7 @@ public class SignInPageTest extends BaseClass<SignInPage> {
     public void checkUrlAfterClickingCreateAccountButton() {
         page.createAccountButtonClick();
         String actualResult = url();
-        String expectedResult = createAccountLink;
+        String expectedResult = properties.getProperty("createAccountLink");
         Assert.assertNotEquals(actualResult, expectedResult);
     }
 
